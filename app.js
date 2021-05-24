@@ -2,10 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-// calling express
 const app = express();
 
-// for security, allowing the port
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -18,9 +16,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
-const db = require("./app/models");
+const db = require("./models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -32,13 +28,14 @@ db.mongoose
   .catch(err => {
     console.log("Cannot connect to the database!", err);
     process.exit();
-});
-
+  });
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to joel wembo application." });
+  res.json({ message: "Welcome to bezkoder application." });
 });
+
+require("./routes/turorial.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
